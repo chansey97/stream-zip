@@ -1,4 +1,5 @@
 #lang racket
+(provide (all-defined-out))
 
 (define (stream-zip . strms)
   (define (stream-zip strms)
@@ -35,7 +36,9 @@
              (for/list ([i (in-range n)])
                (cond
                  [(< i vslen)
-                  (stream-cons (list-ref vs i) (list-ref (call-with-values (λ () (stream-unzip (stream-rest strm) vslen)) list) i))] ; TODO: performance issue?
+                  (stream-cons
+                   (list-ref vs i)
+                   (list-ref (call-with-values (λ () (stream-unzip (stream-rest strm) vslen)) list) i))] ; TODO: performance issue?
                  [else
                   empty-stream])
                ))))
